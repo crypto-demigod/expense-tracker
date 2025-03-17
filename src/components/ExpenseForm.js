@@ -83,96 +83,106 @@ const ExpenseForm = ({ expense = null, onSubmit, onCancel }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
           {error}
         </div>
       )}
       
-      <div>
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Title *
-        </label>
-        <input
-          type="text"
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          placeholder="Expense Title"
-          required
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
+            Title
+          </label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="Expense title"
+            required
+          />
+        </div>
+        
+        <div>
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="amount">
+            Amount
+          </label>
+          <input
+            type="number"
+            id="amount"
+            name="amount"
+            value={formData.amount}
+            onChange={handleChange}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="0.00"
+            step="0.01"
+            min="0"
+            required
+          />
+        </div>
       </div>
       
-      <div>
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Amount *
-        </label>
-        <input
-          type="number"
-          name="amount"
-          value={formData.amount}
-          onChange={handleChange}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          placeholder="Amount"
-          step="0.01"
-          min="0"
-          required
-        />
-      </div>
-      
-      <div>
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Category *
-        </label>
-        <select
-          name="category"
-          value={formData.category}
-          onChange={handleChange}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          required
-        >
-          <option value="">Select a category</option>
-          {EXPENSE_CATEGORIES.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.icon} {category.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      
-      <div>
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Date *
-        </label>
-        <input
-          type="date"
-          name="date"
-          value={formData.date}
-          onChange={handleChange}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          required
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category">
+            Category
+          </label>
+          <select
+            id="category"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required
+          >
+            <option value="">Select a category</option>
+            {EXPENSE_CATEGORIES.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.icon} {category.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        
+        <div>
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date">
+            Date
+          </label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required
+          />
+        </div>
       </div>
       
       <div className="flex items-center mb-4">
         <input
           type="checkbox"
+          id="isRecurring"
           name="isRecurring"
           checked={formData.isRecurring}
           onChange={handleChange}
           className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
         />
-        <label className="ml-2 block text-gray-700 text-sm font-bold">
+        <label className="ml-2 block text-gray-700 text-sm font-bold" htmlFor="isRecurring">
           Recurring Expense
         </label>
       </div>
       
       {formData.isRecurring && (
         <div>
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="recurringFrequency">
             Frequency
           </label>
           <select
+            id="recurringFrequency"
             name="recurringFrequency"
             value={formData.recurringFrequency}
             onChange={handleChange}
@@ -189,10 +199,11 @@ const ExpenseForm = ({ expense = null, onSubmit, onCancel }) => {
       )}
       
       <div>
-        <label className="block text-gray-700 text-sm font-bold mb-2">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="notes">
           Notes
         </label>
         <textarea
+          id="notes"
           name="notes"
           value={formData.notes}
           onChange={handleChange}
@@ -202,12 +213,12 @@ const ExpenseForm = ({ expense = null, onSubmit, onCancel }) => {
         />
       </div>
       
-      <div className="flex justify-end space-x-2">
+      <div className="flex flex-col sm:flex-row sm:justify-end space-y-2 sm:space-y-0 sm:space-x-2 pt-4">
         {onCancel && (
           <button
             type="button"
             onClick={onCancel}
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto"
           >
             Cancel
           </button>
@@ -215,7 +226,7 @@ const ExpenseForm = ({ expense = null, onSubmit, onCancel }) => {
         <button
           type="submit"
           disabled={loading}
-          className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
+          className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto ${
             loading ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         >

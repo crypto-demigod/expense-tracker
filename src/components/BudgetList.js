@@ -59,31 +59,25 @@ const BudgetList = () => {
   };
   
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h2 className="text-xl font-bold">Budgets</h2>
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
+        <h1 className="text-2xl font-bold text-gray-900 mb-4 sm:mb-0">Budget Management</h1>
         <button
           onClick={() => {
             setEditingBudget(null);
             setShowAddForm(!showAddForm);
           }}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto"
         >
           {showAddForm ? 'Cancel' : 'Add Budget'}
         </button>
       </div>
       
-      {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-          {error}
-        </div>
-      )}
-      
       {showAddForm && (
-        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-          <h3 className="text-lg font-medium mb-4">
-            {editingBudget ? 'Edit Budget' : 'Add New Budget'}
-          </h3>
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow mb-6">
+          <h2 className="text-xl font-bold mb-4">
+            {editingBudget ? 'Edit Budget' : 'Create New Budget'}
+          </h2>
           <BudgetForm
             budget={editingBudget}
             onSubmit={handleFormSubmit}
@@ -92,21 +86,39 @@ const BudgetList = () => {
         </div>
       )}
       
+      {error && (
+        <div className="bg-red-50 p-4 rounded-md">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-red-800">Error with budgets</h3>
+              <div className="mt-2 text-sm text-red-700">
+                <p>{error}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
       {loading ? (
-        <div className="text-center py-8">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-          <p className="mt-2 text-gray-600">Loading budgets...</p>
+        <div className="text-center py-10">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+          <p className="mt-2 text-gray-500">Loading budgets...</p>
         </div>
       ) : budgetStatus.length === 0 ? (
-        <div className="bg-gray-50 rounded-lg p-8 text-center">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="text-center py-10 bg-white rounded-lg shadow">
+          <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
           </svg>
-          <p className="mt-2 text-gray-600">No budgets found</p>
-          <p className="text-sm text-gray-500">Create a budget to track your spending</p>
+          <h3 className="mt-2 text-sm font-medium text-gray-900">No budgets found</h3>
+          <p className="mt-1 text-sm text-gray-500">Create a budget to track your spending</p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {budgetStatus.map((budget) => (
             <div key={budget.id} className="bg-white p-4 rounded-lg shadow">
               <div className="flex justify-between items-start mb-2">
@@ -138,8 +150,8 @@ const BudgetList = () => {
                 </div>
               </div>
               
-              <div className="flex justify-between items-center mb-1">
-                <div className="text-lg font-bold">{formatAmount(budget.amount)}</div>
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-1">
+                <div className="text-lg font-bold mb-1 sm:mb-0">{formatAmount(budget.amount)}</div>
                 <div className={`text-sm font-medium ${budget.isOverBudget ? 'text-red-600' : 'text-green-600'}`}>
                   {budget.isOverBudget
                     ? `${formatAmount(Math.abs(budget.remaining))} over`
@@ -156,9 +168,9 @@ const BudgetList = () => {
                 ></div>
               </div>
               
-              <div className="text-sm text-gray-600">
-                <span>{formatAmount(budget.spent)} spent</span>
-                <span className="mx-2">•</span>
+              <div className="text-sm text-gray-600 flex flex-wrap">
+                <span className="mr-2">{formatAmount(budget.spent)} spent</span>
+                <span className="mr-2">•</span>
                 <span>{budget.percentage.toFixed(1)}% of budget</span>
               </div>
               

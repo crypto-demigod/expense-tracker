@@ -157,35 +157,36 @@ const Dashboard = () => {
   
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-xl font-bold">Dashboard</h2>
-        <div className="flex space-x-2">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-gray-900 mb-4 sm:mb-0">Dashboard</h1>
+        
+        <div className="flex space-x-2 bg-white rounded-lg shadow px-1 w-full sm:w-auto">
           <button
             onClick={() => setTimeRange('week')}
-            className={`px-3 py-1 rounded text-sm font-medium ${
-              timeRange === 'week'
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            className={`flex-1 sm:flex-none px-3 py-2 text-sm rounded-md ${
+              timeRange === 'week' 
+                ? 'bg-blue-100 text-blue-700 font-medium' 
+                : 'text-gray-700 hover:bg-gray-100'
             }`}
           >
             Week
           </button>
           <button
             onClick={() => setTimeRange('month')}
-            className={`px-3 py-1 rounded text-sm font-medium ${
-              timeRange === 'month'
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            className={`flex-1 sm:flex-none px-3 py-2 text-sm rounded-md ${
+              timeRange === 'month' 
+                ? 'bg-blue-100 text-blue-700 font-medium' 
+                : 'text-gray-700 hover:bg-gray-100'
             }`}
           >
             Month
           </button>
           <button
             onClick={() => setTimeRange('year')}
-            className={`px-3 py-1 rounded text-sm font-medium ${
-              timeRange === 'year'
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            className={`flex-1 sm:flex-none px-3 py-2 text-sm rounded-md ${
+              timeRange === 'year' 
+                ? 'bg-blue-100 text-blue-700 font-medium' 
+                : 'text-gray-700 hover:bg-gray-100'
             }`}
           >
             Year
@@ -193,10 +194,10 @@ const Dashboard = () => {
         </div>
       </div>
       
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* Stats */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div className="bg-white p-4 rounded-lg shadow">
-          <h3 className="text-sm font-medium text-gray-500">Total Expenses</h3>
+          <h3 className="text-sm font-medium text-gray-500">Total Spending</h3>
           <p className="text-2xl font-bold text-gray-800">{formatAmount(filteredStats.total)}</p>
           <p className="text-xs text-gray-500 mt-1">
             {timeRange === 'week' ? 'Last 7 days' : timeRange === 'month' ? 'Last 30 days' : 'Last 12 months'}
@@ -256,8 +257,8 @@ const Dashboard = () => {
           <div className="space-y-4">
             {budgetStatus.map((budget) => (
               <div key={budget.id} className="border-b pb-4 last:border-b-0 last:pb-0">
-                <div className="flex justify-between items-center mb-1">
-                  <div>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-1">
+                  <div className="mb-1 sm:mb-0">
                     <span className="font-medium">
                       {(() => {
                         const category = EXPENSE_CATEGORIES.find(c => c.id === budget.category);

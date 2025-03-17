@@ -73,24 +73,24 @@ function App() {
       <div className="min-h-screen bg-gray-100">
         <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
         
-        <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <main className="container mx-auto py-6 px-4 sm:px-6 lg:px-8 max-w-7xl">
           {activeTab === 'expenses' && (
             <div className="space-y-6">
-              <div className="flex justify-between items-center">
-                <h1 className="text-2xl font-bold text-gray-900">Expenses</h1>
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                <h1 className="text-2xl font-bold text-gray-900 mb-4 sm:mb-0">Expenses</h1>
                 <button
                   onClick={() => {
                     setEditingExpense(null);
                     setShowAddExpense(!showAddExpense);
                   }}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto"
                 >
                   {showAddExpense ? 'Cancel' : 'Add Expense'}
                 </button>
               </div>
               
               {showAddExpense && (
-                <div className="bg-white p-6 rounded-lg shadow">
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow">
                   <h2 className="text-xl font-bold mb-4">
                     {editingExpense ? 'Edit Expense' : 'Add New Expense'}
                   </h2>
